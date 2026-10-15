@@ -3,18 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#123b35">
   <title>Examen | Fundamentos de la Energía Solar</title>
 
   <style>
     :root {
-      --verde: #123b35;
-      --verde2: #1c6254;
-      --fondo: #f2f6f4;
-      --borde: #d8e2dd;
-      --texto: #24332e;
-      --gris: #64746e;
-      --rojo: #a92b2b;
+      --azul: #123b67;
+      --azul2: #1e5b91;
+      --fondo: #f2f5f9;
+      --borde: #d6deea;
+      --verde: #167647;
+      --rojo: #b42318;
     }
 
     * { box-sizing: border-box; }
@@ -22,160 +20,97 @@
     body {
       margin: 0;
       background: var(--fondo);
-      color: var(--texto);
+      color: #202a36;
       font-family: Arial, Helvetica, sans-serif;
       line-height: 1.55;
     }
 
     header {
-      background: var(--verde);
+      background: var(--azul);
       color: white;
-      padding: 28px 18px;
+      padding: 25px 16px;
       text-align: center;
     }
 
-    header h1 {
-      margin: 0 0 8px;
-      font-size: clamp(1.45rem, 4vw, 2.2rem);
-    }
-
-    header p { margin: 0; color: #e2eee9; }
+    header h1 { margin: 0 0 8px; font-size: 1.7rem; }
+    header p { margin: 4px; }
 
     main {
-      width: min(920px, 94%);
-      margin: 24px auto 50px;
+      max-width: 900px;
+      padding: 20px;
+      margin: 24px auto;
     }
 
     .card {
       background: white;
       border: 1px solid var(--borde);
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 22px;
       margin-bottom: 18px;
-      box-shadow: 0 4px 16px rgba(22, 53, 43, .05);
+      box-shadow: 0 3px 12px #152a4010;
     }
 
-    h2 { margin-top: 0; color: var(--verde); }
-
-    label {
-      display: block;
-      font-weight: 700;
-      margin-bottom: 7px;
-    }
+    label { display: block; font-weight: bold; margin-bottom: 7px; }
 
     input, textarea {
+      display: block;
       width: 100%;
-      border: 1px solid #bdccc5;
-      border-radius: 8px;
       padding: 12px;
+      border: 1px solid #aab8ca;
+      border-radius: 7px;
       font: inherit;
-      color: var(--texto);
-      background: #fff;
+      background: white;
     }
 
-    input:focus, textarea:focus {
-      outline: 2px solid #79b8a3;
-      border-color: var(--verde2);
-    }
+    textarea { min-height: 120px; resize: vertical; }
 
-    textarea {
-      min-height: 115px;
-      resize: vertical;
-    }
-
-    .fila {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .acciones {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 18px;
-    }
+    .pregunta { margin: 20px 0; }
+    .pregunta p { font-weight: bold; margin: 0 0 10px; }
 
     button {
       border: 0;
-      border-radius: 8px;
-      padding: 12px 17px;
-      font: inherit;
-      font-weight: 700;
+      border-radius: 7px;
+      padding: 11px 16px;
+      margin: 5px 5px 5px 0;
+      font-weight: bold;
+      font-size: 0.96rem;
       cursor: pointer;
+      background: var(--azul2);
+      color: white;
     }
 
+    button.secundario { background: #526273; }
     button:disabled { opacity: .55; cursor: not-allowed; }
 
-    .principal { background: var(--verde); color: white; }
-    .secundario { background: #e5eeea; color: var(--verde); }
-    .peligro { background: #fbeaea; color: #8a2020; }
-
-    .pregunta {
-      padding: 18px 0;
-      border-bottom: 1px solid #e6ece8;
-    }
-
-    .pregunta:last-child { border-bottom: 0; }
-    .pregunta h3 { margin: 0 0 10px; font-size: 1.02rem; }
-    .numero { color: var(--verde2); }
-
-    .ayuda { color: var(--gris); font-size: .92rem; }
-    .oculto { display: none !important; }
-
-    #estado, #estadoEnvio {
-      margin-top: 12px;
-      font-weight: 700;
-      overflow-wrap: anywhere;
-    }
-
-    .exito { color: #17683d; }
+    .estado { margin-top: 12px; font-weight: bold; }
     .error { color: var(--rojo); }
-    .aviso { color: #77551a; }
+    .exito { color: var(--verde); }
+    .muted { color: #5a6776; font-size: .93rem; }
 
-    .progreso-contenedor {
-      background: #e5ece8;
-      border-radius: 99px;
-      height: 10px;
+    .barra {
+      height: 9px;
+      background: #e0e6ef;
+      border-radius: 20px;
       overflow: hidden;
-      margin: 10px 0;
+      margin: 10px 0 18px;
     }
 
     #progreso {
       height: 100%;
-      width: 0%;
-      background: #2d8b68;
+      width: 0;
+      background: #24834f;
       transition: width .2s;
     }
 
-    .nota {
-      background: #edf5f1;
-      border-left: 4px solid var(--verde2);
-      padding: 12px 14px;
-      border-radius: 4px;
-    }
-
-    footer {
-      text-align: center;
-      color: var(--gris);
-      padding: 20px;
-      font-size: .88rem;
-    }
-
-    @media (max-width: 620px) {
-      .fila { grid-template-columns: 1fr; }
-      .card { padding: 16px; }
-      button { width: 100%; }
-    }
+    #zonaExamen[hidden] { display: none; }
 
     @media print {
       body { background: white; }
-      header { background: white; color: black; padding: 10px; }
-      header p { color: black; }
-      main { width: 100%; margin: 0; }
-      .no-imprimir, #identificacion, footer { display: none !important; }
+      header { background: white; color: black; padding: 8px; }
+      main { margin: 0; padding: 0; }
+      .no-print, #registro { display: none !important; }
       .card { box-shadow: none; break-inside: avoid; }
-      textarea { min-height: 85px; border: 1px solid #999; }
+      textarea { min-height: 90px; border: 1px solid #888; }
     }
   </style>
 </head>
@@ -183,454 +118,351 @@
 <body>
 <header>
   <h1>Fundamentos de la Energía Solar</h1>
-  <p>Evaluación de la Unidad 1 · Respuestas abiertas</p>
+  <p>Evaluación de respuestas abiertas</p>
+  <p>Universidad Tecnológica de La Laguna Durango</p>
 </header>
 
 <main>
-  <section class="card" id="identificacion">
+  <section class="card" id="registro">
     <h2>Identificación del estudiante</h2>
 
-    <div class="fila">
-      <div>
-        <label for="matricula">Matrícula</label>
-        <input
-          id="matricula"
-          name="matricula"
-          type="text"
-          autocomplete="off"
-          maxlength="40"
-          placeholder="Escribe tu matrícula"
-          required
-        >
-      </div>
+    <label for="matricula">Matrícula</label>
+    <input id="matricula" maxlength="40" autocomplete="off"
+           placeholder="Escribe tu matrícula">
 
-      <div>
-        <label for="alumno">Nombre del alumno</label>
-        <input id="alumno" type="text" readonly placeholder="Se consultará automáticamente">
-      </div>
-    </div>
-
-    <div class="acciones no-imprimir">
-      <button class="principal" id="btnBuscar" type="button">
-        Verificar matrícula
+    <div class="no-print">
+      <button id="btnValidar" type="button" onclick="validarMatricula()">
+        Validar matrícula
       </button>
     </div>
 
-    <p id="estado" role="status" aria-live="polite"></p>
-    <p class="ayuda">
-      Verifica que tu nombre sea correcto antes de contestar. Si tu matrícula
-      no aparece, comunícate con tu docente.
-    </p>
+    <p id="estadoValidacion" class="estado" role="status"></p>
+    <p id="nombreAlumno"></p>
   </section>
 
-  <section class="card">
+  <section class="card" id="zonaExamen" hidden>
     <h2>Instrucciones</h2>
-    <ul>
-      <li>Contesta las 15 preguntas con tus propias palabras.</li>
-      <li>Fundamenta tus respuestas e incluye cálculos cuando se soliciten.</li>
-      <li>Revisa todas las respuestas antes de enviar.</li>
-      <li>El sistema requiere que todas las respuestas estén contestadas.</li>
-    </ul>
-    <div class="nota">
-      <strong>Importante:</strong> imprimir o descargar una copia no significa
-      que el examen se haya guardado en la hoja de cálculo.
-    </div>
-  </section>
+    <p>
+      Contesta las 15 preguntas con tus propias palabras. Lee cuidadosamente
+      cada enunciado y revisa tus respuestas antes de enviar.
+    </p>
+    <p class="muted">
+      Las respuestas se guardan en la hoja de cálculo institucional.
+      No cierres esta página hasta completar el envío.
+    </p>
 
-  <section class="card" id="seccionExamen">
-    <h2>Cuestionario</h2>
-    <p class="ayuda" id="contador">0 de 15 respuestas contestadas</p>
-    <div class="progreso-contenedor" aria-label="Progreso del examen">
-      <div id="progreso"></div>
-    </div>
+    <div class="barra"><div id="progreso"></div></div>
+    <p id="contador" class="muted">0 de 15 preguntas contestadas</p>
 
-    <form id="examen">
-      <div id="contenedorPreguntas"></div>
+    <form id="formExamen" onsubmit="return enviarExamen(event)">
+      <div id="preguntas"></div>
 
-      <div class="acciones no-imprimir">
-        <button class="principal" id="btnEnviar" type="submit">
-          Enviar examen
+      <div class="no-print">
+        <button type="submit" id="btnEnviar">Enviar examen</button>
+        <button type="button" class="secundario" onclick="descargarCSV()">
+          Descargar mis respuestas CSV
         </button>
-        <button class="secundario" type="button" id="btnImprimir">
+        <button type="button" class="secundario" onclick="window.print()">
           Imprimir / Guardar PDF
         </button>
-        <button class="secundario" type="button" id="btnCSV">
-          Descargar mis respuestas
-        </button>
-        <button class="peligro" type="button" id="btnLimpiar">
-          Limpiar respuestas
-        </button>
       </div>
-
-      <p id="estadoEnvio" role="status" aria-live="polite"></p>
     </form>
+
+    <p id="estadoEnvio" class="estado" role="status"></p>
   </section>
+
+  <!-- Destino oculto del formulario POST -->
+  <iframe name="destinoEnvio" title="Respuesta del servidor"
+          style="display:none"></iframe>
+
+  <form id="formEnvioServidor"
+        method="POST"
+        target="destinoEnvio"
+        style="display:none">
+    <input type="hidden" name="payload" id="payloadServidor">
+  </form>
 </main>
 
-<footer>
-  Fundamentos de la Energía Solar
-</footer>
-
-<!-- El formulario envía los datos al Apps Script sin salir de GitHub Pages. -->
-<iframe
-  name="marcoEnvio"
-  id="marcoEnvio"
-  title="Envío del examen"
-  class="oculto"
-></iframe>
-
 <script>
-'use strict';
+  // URL de la aplicación web de Apps Script.
+  const API_URL =
+    'https://script.google.com/macros/s/AKfycbwNbb3Y7tVixy47MR31cDJZubBAlpHLoJ-hRjcZ35LASfuL4hTISTeHeBYMUYUxDNXHAA/exec';
 
-/*
- * IMPORTANTE:
- * Esta URL debe ser la URL /exec de la implementación vigente.
- * No la escribas como enlace Markdown ni agregues corchetes.
- */
-const API_URL =
-  'https://script.google.com/macros/s/AKfycbwNbb3Y7tVixy47MR31cDJZubBAlpHLoJ-hRjcZ35LASfuL4hTISTeHeBYMUYUxDNXHAA/exec';
-
-const NUM_PREGUNTAS = 15;
-
-const preguntas = [
-  '¿Qué es la energía solar y cuál es su origen?',
-  'Explica la diferencia entre la energía solar fotovoltaica y la energía solar térmica.',
-  '¿Qué es el efecto fotovoltaico y cómo permite producir electricidad?',
-  'Describe la función de las celdas, los módulos y los paneles fotovoltaicos.',
-  '¿Cuál es la diferencia entre potencia eléctrica (W) y energía eléctrica (Wh o kWh)?',
-  '¿Qué factores ambientales y de instalación afectan la producción de un panel solar?',
-  'Explica qué son la irradiancia solar y la irradiación solar, e indica sus unidades habituales.',
-  '¿Por qué la orientación y la inclinación de los módulos solares influyen en su rendimiento?',
-  '¿Qué función cumple un inversor en un sistema fotovoltaico conectado a la red?',
-  'Describe las diferencias generales entre un sistema fotovoltaico conectado a la red y uno aislado.',
-  '¿Qué función realiza un regulador de carga en un sistema fotovoltaico con baterías?',
-  '¿Qué es el sombreado parcial y por qué puede reducir la producción de un arreglo fotovoltaico?',
-  'Un panel tiene una potencia nominal de 450 W y recibe condiciones equivalentes a 5 horas solares pico. Estima su energía diaria ideal en Wh y kWh. Muestra el procedimiento.',
-  'Menciona tres ventajas y tres limitaciones de la energía solar fotovoltaica.',
-  'Describe los principales componentes de un sistema fotovoltaico residencial y explica la función de cada uno.'
-];
-
-const $ = id => document.getElementById(id);
-
-let alumnoValidado = null;
-let consultaActiva = false;
-let envioEnCurso = false;
-let examenEnviado = false;
-let temporizadorLookup = null;
-
-function mostrarEstado(id, mensaje, tipo) {
-  const elemento = $(id);
-  elemento.textContent = mensaje || '';
-  elemento.className = tipo || '';
-}
-
-function normalizarMatricula(valor) {
-  return String(valor || '').trim().toUpperCase().replace(/\s+/g, '');
-}
-
-function construirPreguntas() {
-  const contenedor = $('contenedorPreguntas');
-
-  preguntas.forEach((texto, indice) => {
-    const numero = indice + 1;
-    const bloque = document.createElement('section');
-    bloque.className = 'pregunta';
-
-    const titulo = document.createElement('h3');
-    titulo.innerHTML = '<span class="numero">Pregunta ' + numero +
-      ' de ' + NUM_PREGUNTAS + '.</span> ';
-
-    const textoPregunta = document.createElement('span');
-    textoPregunta.textContent = texto;
-    titulo.appendChild(textoPregunta);
-
-    const etiqueta = document.createElement('label');
-    etiqueta.htmlFor = 'p' + numero;
-    etiqueta.textContent = 'Tu respuesta';
-
-    const area = document.createElement('textarea');
-    area.id = 'p' + numero;
-    area.name = 'p' + numero;
-    area.maxLength = 5000;
-    area.required = true;
-    area.placeholder = 'Escribe tu respuesta aquí...';
-    area.addEventListener('input', actualizarProgreso);
-
-    bloque.appendChild(titulo);
-    bloque.appendChild(etiqueta);
-    bloque.appendChild(area);
-    contenedor.appendChild(bloque);
-  });
-}
-
-function actualizarProgreso() {
-  const contestadas = preguntas.reduce((total, _, i) => {
-    return total + ($('p' + (i + 1)).value.trim() ? 1 : 0);
-  }, 0);
-
-  $('contador').textContent =
-    contestadas + ' de ' + NUM_PREGUNTAS + ' respuestas contestadas';
-
-  $('progreso').style.width = (contestadas / NUM_PREGUNTAS * 100) + '%';
-}
-
-function bloquearIdentidad(bloquear) {
-  $('matricula').readOnly = bloquear;
-  $('btnBuscar').disabled = bloquear || consultaActiva;
-}
-
-function verificarMatricula() {
-  const matricula = normalizarMatricula($('matricula').value);
-
-  if (!matricula) {
-    mostrarEstado('estado', 'Escribe tu matrícula.', 'error');
-    $('matricula').focus();
-    return;
-  }
-
-  if (consultaActiva || envioEnCurso) return;
-
-  consultaActiva = true;
-  alumnoValidado = null;
-  $('alumno').value = '';
-  $('btnBuscar').disabled = true;
-  mostrarEstado('estado', 'Consultando matrícula...', 'aviso');
-
-  const callback = 'respuestaMatricula_' + Date.now() + '_' +
-    Math.floor(Math.random() * 100000);
-
-  let script;
-  let terminado = false;
-
-  function finalizar() {
-    if (terminado) return;
-    terminado = true;
-    consultaActiva = false;
-    $('btnBuscar').disabled = envioEnCurso;
-    if (script) script.remove();
-    try { delete window[callback]; } catch (_) {}
-  }
-
-  window[callback] = function(resultado) {
-    finalizar();
-
-    if (resultado && resultado.ok && resultado.alumno) {
-      alumnoValidado = {
-        matricula: normalizarMatricula(resultado.matricula || matricula),
-        alumno: String(resultado.alumno).trim()
-      };
-      $('matricula').value = alumnoValidado.matricula;
-      $('alumno').value = alumnoValidado.alumno;
-      mostrarEstado('estado', 'Matrícula verificada. Puedes contestar el examen.',
-        'exito');
-    } else {
-      alumnoValidado = null;
-      mostrarEstado('estado',
-        (resultado && resultado.error) || 'No se encontró la matrícula.',
-        'error');
-    }
-  };
-
-  script = document.createElement('script');
-  script.onerror = function() {
-    finalizar();
-    alumnoValidado = null;
-    mostrarEstado(
-      'estado',
-      'No se pudo conectar con Apps Script. Comprueba la URL /exec y la implementación.',
-      'error'
-    );
-  };
-
-  const separador = API_URL.includes('?') ? '&' : '?';
-  script.src = API_URL + separador +
-    'action=lookup&matricula=' + encodeURIComponent(matricula) +
-    '&callback=' + encodeURIComponent(callback);
-
-  document.head.appendChild(script);
-
-  temporizadorLookup = setTimeout(function() {
-    if (!terminado) {
-      finalizar();
-      mostrarEstado('estado',
-        'La consulta tardó demasiado. Revisa la implementación de Apps Script.',
-        'error');
-    }
-  }, 15000);
-}
-
-function obtenerRespuestas() {
-  return preguntas.map((_, i) => $('p' + (i + 1)).value.trim());
-}
-
-function enviarExamen(evento) {
-  evento.preventDefault();
-
-  if (envioEnCurso || examenEnviado) return;
-
-  if (!alumnoValidado) {
-    mostrarEstado('estadoEnvio',
-      'Primero verifica tu matrícula y tu nombre.', 'error');
-    $('matricula').focus();
-    return;
-  }
-
-  const respuestas = obtenerRespuestas();
-  const faltante = respuestas.findIndex(respuesta => !respuesta);
-
-  if (faltante !== -1) {
-    mostrarEstado('estadoEnvio',
-      'Contesta la pregunta ' + (faltante + 1) + ' antes de enviar.',
-      'error');
-    $('p' + (faltante + 1)).focus();
-    return;
-  }
-
-  if (!confirm('¿Confirmas que deseas enviar tu examen? Revisa tus respuestas antes de continuar.')) {
-    return;
-  }
-
-  const payload = {
-    matricula: alumnoValidado.matricula,
-    answers: respuestas,
-    fechaCliente: new Date().toISOString()
-  };
-
-  /*
-   * Apps Script recibe payload como parámetro de formulario.
-   * El iframe evita que el navegador abandone la página.
-   * Debido a la política de origen cruzado, esta página no puede leer
-   * la respuesta del iframe para confirmar el guardado real.
-   */
-  const formularioEnvio = document.createElement('form');
-  formularioEnvio.method = 'POST';
-  formularioEnvio.action = API_URL;
-  formularioEnvio.target = 'marcoEnvio';
-  formularioEnvio.acceptCharset = 'UTF-8';
-  formularioEnvio.style.display = 'none';
-
-  const campo = document.createElement('input');
-  campo.type = 'hidden';
-  campo.name = 'payload';
-  campo.value = JSON.stringify(payload);
-
-  formularioEnvio.appendChild(campo);
-  document.body.appendChild(formularioEnvio);
-
-  envioEnCurso = true;
-  $('btnEnviar').disabled = true;
-  $('btnBuscar').disabled = true;
-  $('matricula').readOnly = true;
-
-  mostrarEstado('estadoEnvio', 'Enviando examen... No cierres esta página.', 'aviso');
-
-  try {
-    formularioEnvio.submit();
-    formularioEnvio.remove();
-
-    setTimeout(function() {
-      envioEnCurso = false;
-      examenEnviado = true;
-      $('btnEnviar').disabled = true;
-
-      mostrarEstado(
-        'estadoEnvio',
-        'La solicitud se envió. Verifica la fila del alumno en Google Sheets para confirmar que las respuestas quedaron guardadas. Si no aparecen, consulta los registros de ejecución de Apps Script.',
-        'aviso'
-      );
-    }, 2500);
-  } catch (error) {
-    envioEnCurso = false;
-    $('btnEnviar').disabled = false;
-    $('btnBuscar').disabled = false;
-    $('matricula').readOnly = false;
-    mostrarEstado('estadoEnvio',
-      'No se pudo iniciar el envío: ' + error.message, 'error');
-  }
-}
-
-function descargarCSV() {
-  if (!alumnoValidado) {
-    mostrarEstado('estadoEnvio',
-      'Verifica primero tu matrícula para descargar tus respuestas identificadas.',
-      'error');
-    return;
-  }
-
-  const respuestas = obtenerRespuestas();
-  const filas = [
-    ['Matricula', alumnoValidado.matricula],
-    ['Alumno', alumnoValidado.alumno],
-    ['Pregunta', 'Respuesta']
+  const preguntas = [
+    '¿Qué es la energía solar y cuál es su origen?',
+    'Explica la diferencia entre la energía solar fotovoltaica y la solar térmica.',
+    '¿Qué función cumple una celda fotovoltaica?',
+    'Describe cómo se transforma la radiación solar en energía eléctrica en un módulo fotovoltaico.',
+    '¿Qué diferencia existe entre irradiancia e irradiación solar?',
+    '¿Qué factores ambientales pueden reducir la producción de un sistema fotovoltaico?',
+    '¿Qué es la potencia nominal de un panel solar y en qué unidad se expresa?',
+    'Explica la función de un inversor en una instalación fotovoltaica.',
+    '¿Qué diferencias hay entre un sistema fotovoltaico conectado a la red y uno aislado?',
+    '¿Qué función cumple un regulador de carga en un sistema con baterías?',
+    '¿Por qué la orientación y la inclinación de los paneles influyen en su rendimiento?',
+    '¿Cómo afectan las sombras parciales a la generación de un arreglo fotovoltaico?',
+    'Menciona y explica dos ventajas y dos limitaciones de la energía solar.',
+    '¿Qué datos deben analizarse para estimar el tamaño de un sistema fotovoltaico para una vivienda?',
+    'Explica la importancia del mantenimiento, la seguridad eléctrica y las protecciones en una instalación solar.'
   ];
 
-  preguntas.forEach((pregunta, i) => {
-    filas.push(['Pregunta ' + (i + 1) + ': ' + pregunta, respuestas[i]]);
+  let matriculaValidada = '';
+  let nombreValidado = '';
+  let enviando = false;
+  let examenEnviado = false;
+
+  // Crear las 15 preguntas en la página.
+  const contenedorPreguntas = document.getElementById('preguntas');
+
+  preguntas.forEach((texto, i) => {
+    const div = document.createElement('div');
+    div.className = 'pregunta';
+
+    const label = document.createElement('label');
+    label.htmlFor = 'p' + (i + 1);
+    label.textContent = 'Pregunta ' + (i + 1);
+
+    const enunciado = document.createElement('p');
+    enunciado.textContent = texto;
+
+    const textarea = document.createElement('textarea');
+    textarea.id = 'p' + (i + 1);
+    textarea.name = 'p' + (i + 1);
+    textarea.required = true;
+    textarea.maxLength = 5000;
+    textarea.placeholder = 'Escribe tu respuesta...';
+    textarea.addEventListener('input', actualizarProgreso);
+
+    div.append(label, enunciado, textarea);
+    contenedorPreguntas.appendChild(div);
   });
 
-  function escaparCSV(valor) {
-    return '"' + String(valor ?? '').replace(/"/g, '""') + '"';
+  function actualizarProgreso() {
+    const campos = preguntas.map((_, i) =>
+      document.getElementById('p' + (i + 1))
+    );
+
+    const contestadas = campos.filter(c => c.value.trim().length > 0).length;
+
+    document.getElementById('contador').textContent =
+      contestadas + ' de ' + preguntas.length + ' preguntas contestadas';
+
+    document.getElementById('progreso').style.width =
+      (contestadas / preguntas.length * 100) + '%';
   }
 
-  const contenido = '\uFEFF' + filas.map(fila =>
-    fila.map(escaparCSV).join(',')
-  ).join('\r\n');
+  // Consultar matrícula mediante JSONP.
+  function validarMatricula() {
+    if (enviando || examenEnviado) return;
 
-  const blob = new Blob([contenido], { type: 'text/csv;charset=utf-8;' });
-  const url = URL.createObjectURL(blob);
-  const enlace = document.createElement('a');
+    const matricula = document.getElementById('matricula')
+      .value.trim().toUpperCase().replace(/\s+/g, '');
 
-  enlace.href = url;
-  enlace.download = 'Examen_Energia_Solar_' +
-    alumnoValidado.matricula.replace(/[^a-zA-Z0-9_-]/g, '_') + '.csv';
+    const estado = document.getElementById('estadoValidacion');
+    const boton = document.getElementById('btnValidar');
 
-  document.body.appendChild(enlace);
-  enlace.click();
-  enlace.remove();
-  URL.revokeObjectURL(url);
-}
+    document.getElementById('zonaExamen').hidden = true;
+    document.getElementById('nombreAlumno').textContent = '';
+    matriculaValidada = '';
+    nombreValidado = '';
 
-function limpiarRespuestas() {
-  if (envioEnCurso || examenEnviado) {
-    alert('El examen ya se envió o está en proceso. No se pueden limpiar las respuestas.');
-    return;
+    if (!matricula) {
+      estado.className = 'estado error';
+      estado.textContent = 'Escribe tu matrícula.';
+      return;
+    }
+
+    estado.className = 'estado';
+    estado.textContent = 'Consultando matrícula...';
+    boton.disabled = true;
+
+    const callback = 'respuestaMatricula_' + Date.now();
+    const script = document.createElement('script');
+    const timeout = setTimeout(() => {
+      limpiar();
+      estado.className = 'estado error';
+      estado.textContent =
+        'No se recibió respuesta. Revisa tu conexión e inténtalo otra vez.';
+      boton.disabled = false;
+    }, 15000);
+
+    function limpiar() {
+      clearTimeout(timeout);
+      script.remove();
+      try { delete window[callback]; } catch (_) {}
+    }
+
+    window[callback] = function(respuesta) {
+      limpiar();
+      boton.disabled = false;
+
+      if (!respuesta || !respuesta.ok) {
+        estado.className = 'estado error';
+        estado.textContent =
+          respuesta?.mensaje || 'Matrícula no encontrada.';
+        return;
+      }
+
+      matriculaValidada = respuesta.matricula;
+      nombreValidado = respuesta.alumno;
+
+      document.getElementById('nombreAlumno').textContent =
+        'Alumno: ' + nombreValidado;
+
+      estado.className = 'estado exito';
+      estado.textContent = 'Matrícula validada. Ya puedes comenzar.';
+
+      document.getElementById('zonaExamen').hidden = false;
+      document.getElementById('matricula').readOnly = true;
+      document.getElementById('btnValidar').disabled = true;
+    };
+
+    script.onerror = function() {
+      limpiar();
+      boton.disabled = false;
+      estado.className = 'estado error';
+      estado.textContent =
+        'No se pudo conectar con Apps Script. Verifica la URL y la implementación.';
+    };
+
+    script.src = API_URL +
+      '?action=lookup' +
+      '&matricula=' + encodeURIComponent(matricula) +
+      '&callback=' + encodeURIComponent(callback);
+
+    document.head.appendChild(script);
   }
 
-  if (!confirm('¿Deseas borrar todas las respuestas escritas en esta página?')) {
-    return;
+  function obtenerRespuestas() {
+    return preguntas.map((_, i) =>
+      document.getElementById('p' + (i + 1)).value.trim()
+    );
   }
 
-  preguntas.forEach((_, i) => { $('p' + (i + 1)).value = ''; });
-  actualizarProgreso();
-  mostrarEstado('estadoEnvio', 'Las respuestas se limpiaron.', 'aviso');
-}
+  function enviarExamen(event) {
+    event.preventDefault();
 
-$('btnBuscar').addEventListener('click', verificarMatricula);
-$('matricula').addEventListener('keydown', function(evento) {
-  if (evento.key === 'Enter') {
-    evento.preventDefault();
-    verificarMatricula();
+    if (enviando || examenEnviado) return false;
+
+    if (!matriculaValidada) {
+      alert('Primero valida tu matrícula.');
+      return false;
+    }
+
+    const respuestas = obtenerRespuestas();
+
+    if (respuestas.some(r => !r)) {
+      alert('Contesta las 15 preguntas antes de enviar.');
+      return false;
+    }
+
+    if (!confirm('¿Confirmas que deseas enviar el examen?')) {
+      return false;
+    }
+
+    const payload = {
+      matricula: matriculaValidada,
+      alumno: nombreValidado,
+      answers: respuestas,
+      fechaCliente: new Date().toISOString()
+    };
+
+    const formulario = document.getElementById('formEnvioServidor');
+    formulario.action = API_URL;
+    document.getElementById('payloadServidor').value =
+      JSON.stringify(payload);
+
+    enviando = true;
+
+    const boton = document.getElementById('btnEnviar');
+    boton.disabled = true;
+
+    const estado = document.getElementById('estadoEnvio');
+    estado.className = 'estado';
+    estado.textContent =
+      'Enviando respuestas… no cierres esta página.';
+
+    try {
+      formulario.submit();
+
+      // El navegador no puede leer directamente la respuesta del iframe
+      // porque pertenece a otro dominio. No afirmar que se guardó sin verificar.
+      setTimeout(() => {
+        enviando = false;
+        examenEnviado = true;
+
+        estado.className = 'estado';
+        estado.textContent =
+          'Solicitud enviada. El navegador no puede confirmar el guardado. ' +
+          'Verifica que tus respuestas aparezcan en Google Sheets antes ' +
+          'de dar por concluido el examen. Si no aparecen, avisa al docente.';
+
+        document.getElementById('formExamen')
+          .querySelectorAll('textarea')
+          .forEach(c => c.readOnly = true);
+      }, 1500);
+
+    } catch (error) {
+      enviando = false;
+      boton.disabled = false;
+      estado.className = 'estado error';
+      estado.textContent =
+        'No se pudo iniciar el envío. Inténtalo de nuevo o avisa al docente.';
+    }
+
+    return false;
   }
-});
 
-$('examen').addEventListener('submit', enviarExamen);
-$('btnImprimir').addEventListener('click', function() {
-  window.print();
-});
-$('btnCSV').addEventListener('click', descargarCSV);
-$('btnLimpiar').addEventListener('click', limpiarRespuestas);
+  function descargarCSV() {
+    if (!matriculaValidada) {
+      alert('Valida primero tu matrícula.');
+      return;
+    }
 
-construirPreguntas();
-actualizarProgreso();
+    const filas = [
+      ['Matricula', 'Alumno', 'Pregunta', 'Respuesta']
+    ];
 
-/*
- * Estas medidas solo son disuasorias: no constituyen un bloqueo seguro
- * del navegador ni impiden capturas, fotografías o el uso de otro dispositivo.
- */
-document.addEventListener('copy', evento => evento.preventDefault());
-document.addEventListener('cut', evento => evento.preventDefault());
-document.addEventListener('paste', evento => evento.preventDefault());
-document.addEventListener('contextmenu', evento => evento.preventDefault());
+    preguntas.forEach((texto, i) => {
+      filas.push([
+        matriculaValidada,
+        nombreValidado,
+        texto,
+        document.getElementById('p' + (i + 1)).value.trim()
+      ]);
+    });
+
+    const escapar = valor =>
+      '"' + String(valor).replace(/"/g, '""') + '"';
+
+    const csv = '\uFEFF' + filas
+      .map(fila => fila.map(escapar).join(','))
+      .join('\r\n');
+
+    const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.href = url;
+    a.download = 'Examen_' + matriculaValidada + '.csv';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    URL.revokeObjectURL(url);
+  }
+
+  // Advertencia básica al intentar salir con respuestas sin enviar.
+  window.addEventListener('beforeunload', function(event) {
+    const hayRespuestas = preguntas.some((_, i) =>
+      document.getElementById('p' + (i + 1)).value.trim()
+    );
+
+    if (hayRespuestas && !examenEnviado) {
+      event.preventDefault();
+      event.returnValue = '';
+    }
+  });
 </script>
 </body>
 </html>
