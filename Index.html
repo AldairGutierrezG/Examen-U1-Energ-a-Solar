@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Examen | Fundamentos de la Energía Solar</title>
+<style>
+:root{--navy:#12304a;--blue:#176b87;--line:#d7e0e7;--bg:#f3f6f8;--ink:#17232d}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink)}
+main{max-width:960px;margin:28px auto;padding:0 16px}.card{background:#fff;border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:16px;box-shadow:0 4px 16px #12304a0a}
+header{background:var(--navy);color:white;border-radius:14px;padding:26px;margin-bottom:16px}h1{margin:0 0 6px;font-size:clamp(1.45rem,4vw,2.1rem)}h2{font-size:1.15rem;color:var(--navy);margin:0 0 14px}p{margin:7px 0}.muted{color:#5c6b76;font-size:.92rem}.row{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.field{flex:1;min-width:220px}label{display:block;font-weight:650;margin:0 0 6px}input,textarea{font:inherit;width:100%;border:1px solid #b9c8d2;border-radius:8px;padding:11px;background:white}textarea{min-height:115px;resize:vertical}button{border:0;border-radius:9px;padding:12px 17px;font:inherit;font-weight:700;cursor:pointer;background:var(--blue);color:white}button.secondary{background:#e8eef2;color:var(--navy)}button:disabled{opacity:.55;cursor:not-allowed}.status{padding:10px 12px;border-radius:8px;background:#edf5f8;margin-top:12px}.question{border-top:1px solid var(--line);padding:17px 0}.question:first-of-type{border-top:0}.qtitle{font-weight:700;margin-bottom:8px}.num{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:#e7f1f5;color:var(--navy);margin-right:8px}.actions{display:flex;gap:10px;flex-wrap:wrap}.hidden{display:none!important}.warning{background:#fff4dc;border:1px solid #f0d79e;color:#674b10;padding:12px;border-radius:8px}
+@media print{body{background:white;font-size:11pt}main{max-width:none;margin:0;padding:0}.no-print{display:none!important}.card,header{box-shadow:none;border:0;border-radius:0;padding:10px;margin:0 0 8px}header{background:white;color:#12304a;border-bottom:2px solid #12304a}.question{break-inside:avoid;padding:9px 0}textarea{border:0;border-bottom:1px solid #bbb;border-radius:0;min-height:70px;padding:4px;overflow:visible;white-space:pre-wrap}h1{font-size:18pt}h2{font-size:13pt}}
+</style>
+</head>
+<body>
+<main>
+<header>
+<h1>Examen: Tema 1. Fundamentos de la energía solar</h1>
+<p>Diseño de Proyectos de Energía Solar · Ingeniería en Energía y Desarrollo Sustentable</p>
+<p class="muted">15 preguntas abiertas · Tiempo sugerido: 60 minutos · Valor total: 100 puntos</p>
+</header>
+<section class="card no-print" id="login">
+<h2>Identificación del estudiante</h2>
+<p class="muted">Ingresa tu matrícula. El sistema buscará tu nombre en la lista del curso.</p>
+<div class="row"><div class="field"><label for="matricula">Matrícula</label><input id="matricula" autocomplete="off" maxlength="40" placeholder="Ingresa tu matrícula"></div><button id="verifyBtn" type="button">Validar matrícula</button></div>
+<div id="loginStatus" class="status" role="status">Escribe tu matrícula para comenzar.</div>
+</section>
+<section class="card hidden" id="studentCard"><h2>Datos del estudiante</h2>
+<p><strong>Alumno:</strong> <span id="studentName"></span></p><p><strong>Matrícula:</strong> <span id="studentId"></span></p><p class="muted">Fecha y hora: <span id="examDate"></span></p></section>
+<section class="card hidden" id="exam">
+<div class="no-print warning">No cierres esta página antes de guardar tus respuestas. Al guardar, las respuestas se escribirán en la hoja U1 y podrás descargar tu PDF como evidencia.</div>
+<h2>Instrucciones</h2><p>Responde con tus propias palabras. Fundamenta tus respuestas con conceptos técnicos, ejemplos, unidades o ecuaciones cuando corresponda. Al finalizar, guarda tus respuestas y genera tu PDF.</p>
+<div id="questions"></div>
+<div class="card no-print" style="background:#f7fafb"><h2>Entrega</h2>
+<div class="actions"><button id="saveBtn" type="button">Guardar respuestas en Sheets</button><button id="pdfBtn" type="button" class="secondary">Generar PDF</button><button id="csvBtn" type="button" class="secondary">Descargar CSV</button></div>
+<p id="submitStatus" class="muted" aria-live="polite">Guarda las respuestas antes de generar el PDF.</p></div>
+</section>
+<section class="card no-print"><h2>Integridad académica</h2>
+<p class="muted">El examen bloquea los atajos habituales de copiar, cortar y pegar y el menú contextual. Detecta cambios de pestaña y muestra una advertencia. Estas medidas no pueden bloquear completamente otras aplicaciones o dispositivos en un navegador normal.</p><div id="integrityLog" class="muted">Cambios de pestaña detectados: 0</div></section>
+</main>
+<script>
+const questions=[
+"Explica cómo se origina la energía del Sol y qué proceso físico permite que llegue a la Tierra.",
+"Describe dos formas de aprovechamiento de la energía solar y distingue la conversión solar térmica de la conversión fotovoltaica.",
+"¿Qué es el efecto fotoeléctrico y por qué es importante para el funcionamiento de una celda solar?",
+"Explica qué ocurre cuando los fotones interactúan con un semiconductor como el silicio y cómo se generan portadores de carga.",
+"¿Cuál es la diferencia entre intensidad de la radiación y energía de los fotones? Relaciona la frecuencia de la luz con la generación fotovoltaica.",
+"Define radiación solar, irradiancia e irradiación. Incluye sus unidades habituales y explica cómo se diferencian.",
+"Explica las diferencias entre radiación directa, difusa y reflejada. Menciona condiciones atmosféricas que influyen en cada una.",
+"¿Por qué la latitud, la longitud y la altitud son variables relevantes al evaluar el recurso solar de un sitio?",
+"Describe cómo cambia la trayectoria aparente del Sol durante el día y a lo largo del año. Incluye la declinación solar en tu explicación.",
+"¿Qué se entiende por ventana solar y estudio de sombras? Explica cómo pueden afectar la ubicación y el rendimiento de un sistema fotovoltaico.",
+"Define las horas solares pico (HSP) y explica cómo se utilizan para estimar la generación eléctrica de un sistema fotovoltaico.",
+"Explica el principio de funcionamiento de un piranómetro, qué variable mide y por qué es útil para caracterizar el recurso solar.",
+"¿Qué es un albedómetro? Explica qué información proporciona sobre la radiación reflejada y da un ejemplo de aplicación.",
+"Compara un pirheliómetro con un heliógrafo: ¿qué mide o registra cada instrumento y para qué se utiliza esa información?",
+"Propón un plan de medición para evaluar un sitio donde se desconoce el recurso solar. Indica instrumentos, variables, registro y análisis necesarios para justificar la viabilidad de un proyecto."
+];
+let student=null, tabChanges=0, saved=false;
+const $=id=>document.getElementById(id);
+const dateText=()=>new Date().toLocaleString('es-MX',{dateStyle:'long',timeStyle:'short'});
+function status(el,msg,error=false){$(el).textContent=msg;$(el).style.background=error?'#fff0f0':'#edf5f8';$(el).style.color=error?'#8b1e1e':''}
+function safeName(s){return(s||'estudiante').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9_-]+/g,'_').slice(0,70)}
+questions.forEach((q,i)=>{const d=document.createElement('div');d.className='question';const l=document.createElement('label');l.className='qtitle';l.htmlFor='a'+(i+1);const n=document.createElement('span');n.className='num';n.textContent=i+1;l.append(n,document.createTextNode(q));const a=document.createElement('textarea');a.id='a'+(i+1);a.placeholder='Escribe aquí tu respuesta…';a.setAttribute('aria-label','Respuesta '+(i+1));a.addEventListener('input',()=>saved=false);d.append(l,a);$('questions').appendChild(d)});
+$('verifyBtn').addEventListener('click',()=>{
+ const m=$('matricula').value.trim();if(!m){status('loginStatus','Ingresa tu matrícula.',true);return}
+ $('verifyBtn').disabled=true;status('loginStatus','Validando matrícula…');
+ google.script.run.withSuccessHandler(data=>{
+  student={matricula:data.matricula,alumno:data.alumno};$('studentName').textContent=student.alumno;$('studentId').textContent=student.matricula;$('examDate').textContent=dateText();$('studentCard').classList.remove('hidden');$('exam').classList.remove('hidden');$('login').classList.add('hidden');
+ }).withFailureHandler(err=>{status('loginStatus',err.message||'No se pudo validar la matrícula.',true)}).withFinally(()=>{$('verifyBtn').disabled=false}).lookupStudent(m);
+});
+function getAnswers(){return questions.map((q,i)=>$('a'+(i+1)).value.trim())}
+$('saveBtn').addEventListener('click',()=>{
+ if(!student)return;const answers=getAnswers();$('saveBtn').disabled=true;status('submitStatus','Guardando respuestas en la hoja U1…');
+ google.script.run.withSuccessHandler(res=>{saved=true;status('submitStatus','✓ '+res.message+' Ya puedes generar tu PDF.');$('saveBtn').disabled=false})
+ .withFailureHandler(err=>{status('submitStatus',err.message||'No se pudieron guardar las respuestas.',true);$('saveBtn').disabled=false})
+ .saveAnswers({matricula:student.matricula,answers:answers});
+});
+$('pdfBtn').addEventListener('click',()=>{
+ if(!student)return;if(!saved&&!confirm('Aún no confirmaste el guardado en Sheets. ¿Deseas generar el PDF de todos modos?'))return;
+ document.title='Examen_'+safeName(student.matricula)+'_'+safeName(student.alumno);window.print();
+});
+$('csvBtn').addEventListener('click',()=>{
+ if(!student)return;const rows=[['Alumno',student.alumno],['Matricula',student.matricula],['Fecha',dateText()],[],['Numero','Pregunta','Respuesta'],...questions.map((q,i)=>[i+1,q,getAnswers()[i]])];
+ const csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='Respuestas_'+safeName(student.matricula)+'.csv';a.click();URL.revokeObjectURL(a.href);
+});
+document.addEventListener('contextmenu',e=>{if(student)e.preventDefault()});
+['copy','cut','paste'].forEach(type=>document.addEventListener(type,e=>{if(student)e.preventDefault()}));
+document.addEventListener('keydown',e=>{if(!student)return;const k=e.key.toLowerCase();if((e.ctrlKey||e.metaKey)&&['c','v','x','a'].includes(k)){e.preventDefault()}});
+document.addEventListener('visibilitychange',()=>{if(student&&document.visibilityState==='hidden'){tabChanges++;$('integrityLog').textContent='Cambios de pestaña detectados: '+tabChanges;alert('Advertencia: se detectó un cambio de pestaña o aplicación.')}});
+window.addEventListener('beforeprint',()=>document.querySelectorAll('textarea').forEach(t=>{t.style.height='auto';t.style.height=Math.max(t.scrollHeight,70)+'px'}));
+</script>
+</body>
+</html>
